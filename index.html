@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GGD Snip</title>
+  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand"><img src="assets/icon-32.png" alt=""><span>GGD Snip</span></div>
+    <button id="btnOpen" class="btn primary" title="Open a PDF from your computer">Open PDF</button>
+    <input id="fileInput" type="file" accept="application/pdf,.pdf" multiple hidden>
+  </header>
+
+  <div class="row">
+    <select id="docSelect" title="Documents in this add-in"><option value="">No documents yet</option></select>
+    <button id="btnForget" class="btn icon" title="Remove this document from the list">✕</button>
+  </div>
+
+  <div class="row">
+    <div class="seg" role="radiogroup" aria-label="Snip mode">
+      <button data-mode="number" class="on" title="One amount: $1,234.56 → 1234.56, (45.00) → -45">Number</button>
+      <button data-mode="sum" title="Add up every amount inside the box">Sum</button>
+      <button data-mode="text" title="Copy the words exactly">Text</button>
+    </div>
+    <div class="spacer"></div>
+    <button id="btnPrev" class="btn icon" title="Previous page">‹</button>
+    <span id="pageLabel" class="muted">–</span>
+    <button id="btnNext" class="btn icon" title="Next page">›</button>
+    <button id="btnZoomOut" class="btn icon" title="Zoom out">−</button>
+    <button id="btnZoomIn" class="btn icon" title="Zoom in">+</button>
+  </div>
+
+  <div id="cellInfo" class="cellinfo" hidden></div>
+
+  <main id="viewer" class="viewer">
+    <div id="empty" class="empty">
+      <p><strong>Open a bank statement to start.</strong></p>
+      <p>1. Click a cell in Excel.<br>2. Drag a box around a number on the PDF.<br>3. The number goes into the cell, linked to its source.</p>
+      <p class="muted">Click any snipped cell later to jump back to where it came from.</p>
+    </div>
+    <div id="pageWrap" class="pagewrap" hidden>
+      <canvas id="canvas"></canvas>
+      <div id="overlay" class="overlay"></div>
+    </div>
+  </main>
+
+  <details class="settings">
+    <summary>Settings</summary>
+    <label><input type="checkbox" id="optMoveDown" checked> Move down one cell after each snip</label>
+    <label><input type="checkbox" id="optMark" checked> Shade snipped cells light blue</label>
+    <label><input type="checkbox" id="optOcr" checked> Read scanned pages (OCR) when there's no text</label>
+    <label><input type="checkbox" id="optShowBoxes" checked> Show snipped boxes on the PDF</label>
+  </details>
+
+  <footer id="status" class="status">Ready.</footer>
+
+  <script src="core.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
